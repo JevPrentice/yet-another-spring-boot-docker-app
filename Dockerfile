@@ -1,23 +1,16 @@
-FROM openjdk:10
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y maven
+FROM openjdk:12
+MAINTAINER Jev Prentice
 
-ENV java="/usr/lib/jvm/java-10-openjdk-amd64/bin/java"
+ENV java="/usr/lib/jvm/java-12-openjdk-amd64/bin/java"
 
-WORKDIR /workdir
+# Add Maven dependencies (not shaded into the artifact; Docker-cached)
+ADD target/lib /usr/share/docker-java12-pingpongservice/lib
+# Add the service itself
+ARG JAR_FILE
+#ADD target/${JAR_FILE} /usr/share/docker-java12-pingpongservice/pingpongservice.jar
+ADD target/docker-java12-pingpongservice.jar /usr/share/docker-java12-pingpongservice/docker-java12-pingpongservice.jar
 
-# Prepare by downloading dependencies
-ADD pom.xml /workdir/pom.xml
-RUN ["mvn", "dependency:resolve"]
-RUN ["mvn", "verify"]
-
-# Add source
-ADD src /workdir/src
-
-# Compile and package into a fat jar
-RUN ["mvn", "package"]
+VOLUME ["/data"]
 
 EXPOSE 8082
-ENTRYPOINT ["java"]
-CMD ["-jar", "/workdir/target/DockerJava10-1.0-SNAPSHOT-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/share/docker-java12-pingpongservice/docker-java12-pingpongservice.jar"]

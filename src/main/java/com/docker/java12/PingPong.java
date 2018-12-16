@@ -1,4 +1,4 @@
-package com.docker.java10;
+package com.docker.java12;
 
 import java.io.IOException;
 import java.io.OutputStream;
