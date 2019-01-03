@@ -28,7 +28,10 @@ public class SpringStartupApplicationListener implements ApplicationListener<Con
     ) {
         this.personService = personService;
         this.userService = userService;
-        this.adminPerson = new Person(env.getProperty("admin.username"), env.getProperty("admin.password"));
+        this.adminPerson = new Person(
+                env.getProperty("admin.username", "admin"),
+                env.getProperty("admin.password", "password")
+        );
     }
 
     private boolean testAdminPersonFirstName(@NonNull final Person person) {
