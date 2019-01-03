@@ -2,7 +2,7 @@
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="com.jevprentice" level="DEBUG"/>
+    <logger name="com.docker.java12" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
 
 </configuration>

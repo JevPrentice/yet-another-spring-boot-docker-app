@@ -13,11 +13,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "id")
 public class Person implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
-    private static final String PERSON_TABLE_NAME = "person";
-    private static final String FIRST_NAME_COLUMN_NAME = "first_name";
-    private static final String LAST_NAME_COLUMN_NAME = "last_name";
+    private static final String FIRST_NAME_COLUMN_NAME = "firstname";
+    private static final String LAST_NAME_COLUMN_NAME = "lastname";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +35,8 @@ public class Person implements Serializable {
     }
 
     /**
+     * Person constructor
+     *
      * @param firstName The first name for the person.
      * @param lastName  The last name for the person.
      */
