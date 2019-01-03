@@ -1,4 +1,4 @@
-package com.jevprentice.repo;
+package com.jevprentice.repository;
 
 import com.jevprentice.model.Person;
 import org.springframework.data.repository.CrudRepository;
