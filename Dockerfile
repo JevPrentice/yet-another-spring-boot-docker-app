@@ -1,16 +1,14 @@
-FROM openjdk:12
+FROM openjdk:12-alpine
 MAINTAINER Jev Prentice
 
-ENV java="/usr/lib/jvm/java-12-openjdk-amd64/bin/java"
+# Copy the application jar
+COPY target/yet-another-spring-boot-docker-app.jar /usr/share/yet-another-spring-boot-docker-app/yet-another-spring-boot-docker-app.jar
 
-# Add Maven dependencies (not shaded into the artifact; Docker-cached)
-ADD target/lib /usr/share/docker-java12-pingpongservice/lib
-# Add the service itself
-ARG JAR_FILE
-#ADD target/${JAR_FILE} /usr/share/docker-java12-pingpongservice/pingpongservice.jar
-ADD target/docker-java12-pingpongservice.jar /usr/share/docker-java12-pingpongservice/docker-java12-pingpongservice.jar
+# Create volumes
+VOLUME ["/data", "/tmp"]
 
-VOLUME ["/data"]
+# Expose the service on a port
+EXPOSE 8080
 
-EXPOSE 8082
-ENTRYPOINT ["java", "-jar", "/usr/share/docker-java12-pingpongservice/docker-java12-pingpongservice.jar"]
+# Create entry point for service
+ENTRYPOINT ["java", "-jar", "/usr/share/yet-another-spring-boot-docker-app/yet-another-spring-boot-docker-app.jar"]

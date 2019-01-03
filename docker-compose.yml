@@ -1,17 +1,33 @@
 version: "3.7"
+networks:
+  yet-another-spring-boot-docker-app-network:
+    name: yet-another-spring-boot-docker-app-network
 services:
+  db:
+    image: postgres:11.1-alpine
+    environment:
+      POSTGRES_USER: postgres_username
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: yet-another-spring-boot-docker-app
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - /tmp/yet-another-spring-boot-docker-app/data/pgdata:/var/lib/postgresql/data/pgdata
+    networks:
+      - yet-another-spring-boot-docker-app-network
   web:
-    image: jevprentice/docker-java12-pingpongservice:1.0
+    image: jevprentice/yet-another-spring-boot-docker-app:latest
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
     ports:
-      - "8082:8082"
+      - "8080:8080"
     volumes:
-      - /tmp/docker-java12-pingpongservice/data:/data
+      - /tmp/yet-another-spring-boot-docker-app/data:/data
+    depends_on:
+      - "db"
+      - yet-another-spring-boot-docker-app-network
     networks:
-      - docker-java12-pingpongservice-network
-networks:
-  docker-java12-pingpongservice-network:
-    name: docker-java12-pingpongservice-network
+      - yet-another-spring-boot-docker-app-network

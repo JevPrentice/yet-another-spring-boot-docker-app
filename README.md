@@ -1,21 +1,41 @@
-# DockerJava12
+# Yet another Spring Boot Docker Application
 
-Simple PingPong service written in Java built using Maven and Docker (openjdk:12)
+This project is yet another simple service written with Java and Spring boot, the project is built into a openjdk:12 docker image using Maven.
 
-## Build project and local docker image with maven
-mvn clean install
+## Build project and local image with maven, then push to dockerhub ( Mush be signed in )
 
-## Build and push docker images
-docker build -t jevprentice/docker-java12-pingpongservice:1.0 .
+mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest
 
-docker push jevprentice/docker-java12-pingpongservice:1.0
+## Docker swarm (An image mush be available on dockerhub - https://cloud.docker.com/repository/registry-1.docker.io/jevprentice/yet-another-spring-boot-docker-app/tags)
 
-## Run docker container
-docker run -d --name=docker-java12-pingpongservice --restart always -p 8082:8082 -v /tmp/docker-java12-pingpongservice/data:/data jevprentice/docker-java12-pingpongservice:1.0
-
-## Run Stack (An image mush be available on dockerhub)
 docker swarm init
 
-docker stack deploy -c docker-compose.yml docker-java12-pingpongservice --with-registry-auth
+mkdir -p /tmp/yet-another-spring-boot-docker-app/data/pgdata
 
-docker stack services docker-java12-pingpongservice
+docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
+
+## Docker and docker stack helpful commands
+
+docker stack services yet-another-spring-boot-docker-app
+
+docker stack ps yet-another-spring-boot-docker-app
+
+docker service logs yet-another-spring-boot-docker-app_web
+
+docker service logs yet-another-spring-boot-docker-app_db
+
+docker stack rm yet-another-spring-boot-docker-app
+
+## Build and push docker image (Without Maven)
+
+### Build image
+
+docker build -t jevprentice/yet-another-spring-boot-docker-app:latest .
+
+### Push image ( Must be signed in )
+
+docker push jevprentice/yet-another-spring-boot-docker-app:latest
+
+## Access Postgres
+
+export PGPASSWORD="postgres_password" && "/Applications/Postgres.app/Contents/Versions/11/bin/psql" -p5432 -d "yet-another-spring-boot-docker-app" -U "postgres_username" -h localhost
