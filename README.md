@@ -14,6 +14,8 @@ mkdir -p /tmp/yet-another-spring-boot-docker-app/data/pgdata
 
 docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
 
+mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
+
 ## Docker and docker stack helpful commands
 
 docker stack services yet-another-spring-boot-docker-app
@@ -25,6 +27,8 @@ docker service logs yet-another-spring-boot-docker-app_web
 docker service logs yet-another-spring-boot-docker-app_db
 
 docker stack rm yet-another-spring-boot-docker-app
+
+docker service update --image jevprentice/yet-another-spring-boot-docker-app:latest --force yet-another-spring-boot-docker-app_web
 
 ## Build and push docker image (Without Maven)
 

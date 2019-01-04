@@ -1,15 +1,23 @@
 package com.jevprentice.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.jevprentice.util.AttributeNames;
+import com.jevprentice.util.ControllerMappings;
+import com.jevprentice.util.ViewNames;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class HomeController {
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String root() {
-        return "Welcome to yet another spring boot docker application, I bet you are excited!";
+    @GetMapping(ControllerMappings.ROOT)
+    public String root(final Model model) {
+        return home(model);
+    }
+
+    @GetMapping(ControllerMappings.HOME)
+    public String home(final Model model) {
+        model.addAttribute(AttributeNames.MAIN_MESSAGE, "Here is the main message straight from Java, take it.");
+        return ViewNames.HOME;
     }
 }

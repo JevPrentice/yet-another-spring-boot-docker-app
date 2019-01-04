@@ -29,6 +29,10 @@ public class Person implements Serializable {
     @Column(name = LAST_NAME_COLUMN_NAME)
     private String lastName;
 
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "application_user_id")
+//    private ApplicationUser applicationUser;
+
     /**
      * Default constructor for Hibernate
      */

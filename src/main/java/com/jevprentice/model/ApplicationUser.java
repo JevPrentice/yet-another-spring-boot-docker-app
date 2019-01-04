@@ -24,8 +24,8 @@ public class ApplicationUser implements Serializable {
     @Column(name = PASSWORD_COLUMN_NAME)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "person_id")
     private Person person;
 
     /**

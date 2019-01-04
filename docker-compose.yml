@@ -1,10 +1,15 @@
 version: "3.7"
 networks:
   yet-another-spring-boot-docker-app-network:
+    # driver: bridge
     name: yet-another-spring-boot-docker-app-network
 services:
   db:
     image: postgres:11.1-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     environment:
       POSTGRES_USER: postgres_username
       POSTGRES_PASSWORD: postgres_password
@@ -28,6 +33,5 @@ services:
       - /tmp/yet-another-spring-boot-docker-app/data:/data
     depends_on:
       - "db"
-      - yet-another-spring-boot-docker-app-network
     networks:
       - yet-another-spring-boot-docker-app-network

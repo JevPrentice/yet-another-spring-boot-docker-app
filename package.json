@@ -1,7 +1,0 @@
-{
-  "name": "yet-another-spring-boot-docker-app-ui",
-  "version": "1.0.0",
-  "dependencies": {
-    "bootstrap": "^4.2.1"
-  }
-}
