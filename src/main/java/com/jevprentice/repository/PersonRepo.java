@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface PersonCrudRepository extends CrudRepository<Person, Long> {
+public interface PersonRepo extends CrudRepository<Person, Long> {
     List<Person> findByLastName(String lastName);
 }
 

@@ -1,4 +1,4 @@
-package com.jevprentice.util.thymeleaf;
+package com.jevprentice.thymeleaf;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

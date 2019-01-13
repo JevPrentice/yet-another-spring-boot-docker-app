@@ -3,22 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h3 class="mt-5">Sign in</h3>
-    <form th:action="@{/login}" method="post">
-        <div th:if="${param.error}">
-            <div class="alert alert-danger">
-                Invalid username or password.
-            </div>
-        </div>
-        <div th:if="${param.logout}">
-            <div class="alert alert-info">
-                You have been logged out.
-            </div>
-        </div>
+    <h3 class="mt-5">Sign up</h3>
+    <form th:action="@{/register}" method="post">
         <div class="form-group">
             <label for="username">Username</label>:
             <input type="text"
@@ -41,14 +31,14 @@
         <div class="form-group">
             <div class="col-sm-6 col-sm-offset-3">
                 <input type="submit"
-                       name="login-submit"
-                       id="login-submit"
+                       name="register-submit"
+                       id="register-submit"
                        class="form-control btn btn-info"
-                       value="Log In">
+                       value="Submit">
+                <!--TODO-->
             </div>
         </div>
     </form>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </div>
 </body>
 </html>

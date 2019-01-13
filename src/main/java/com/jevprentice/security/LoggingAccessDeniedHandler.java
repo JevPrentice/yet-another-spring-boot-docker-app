@@ -1,4 +1,4 @@
-package com.jevprentice.web;
+package com.jevprentice.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,19 +16,15 @@ import java.io.IOException;
 @Component
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 
+
     @Override
-    public void handle(final HttpServletRequest request,
-                       final HttpServletResponse response,
-                       final AccessDeniedException ex
-    ) throws IOException, ServletException {
-
+    public void handle(final HttpServletRequest request, final HttpServletResponse response, final AccessDeniedException ex)
+            throws IOException, ServletException {
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         if (auth != null)
             log.info(auth.getName()
                     + " was trying to access protected resource: "
                     + request.getRequestURI());
-
         response.sendRedirect(request.getContextPath() + "/access-denied");
     }
 }

@@ -1,6 +1,5 @@
-package com.jevprentice.config;
+package com.jevprentice.security;
 
-import com.jevprentice.web.LoggingAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,19 +13,33 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final LoggingAccessDeniedHandler loggingAccessDeniedHandler;
+//    private final WebUserRepo webUserRepo;
+
     @Autowired
-    private LoggingAccessDeniedHandler accessDeniedHandler;
+    public SecurityConfig(
+            final LoggingAccessDeniedHandler loggingAccessDeniedHandler
+//            final WebUserRepo webUserRepo
+    ) {
+        this.loggingAccessDeniedHandler = loggingAccessDeniedHandler;
+//        this.webUserRepo = webUserRepo;
+    }
+
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+    protected void configure(final HttpSecurity http) throws Exception {
+        http.authorizeRequests()
                 .antMatchers(
                         "/",
                         "/js/**",
                         "/css/**",
                         "/img/**",
-                        "/webjars/**").permitAll()
+                        "/webjars/**"
+                ).permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
@@ -42,17 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
+                .accessDeniedHandler(loggingAccessDeniedHandler);
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+//        final WebUser admin = webUserRepo.findByUserName("admin").orElseThrow(RuntimeException::new);
         auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+                .withUser("user") // TODO
+                .password(passwordEncoder().encode("user"))
+                .roles("USER");
     }
 }

@@ -1,6 +1,6 @@
-package com.jevprentice.controller;
+package com.jevprentice.web;
 
-import com.jevprentice.service.PersonService;
+import com.jevprentice.repository.PersonRepo;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,24 +13,17 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "person")
 public class PersonController {
 
-    private final PersonService service;
+    private final PersonRepo personRepo;
 
     @Autowired
-    public PersonController(@NonNull final PersonService personService) {
-        this.service = personService;
+    public PersonController(@NonNull final PersonRepo personRepo) {
+        this.personRepo = personRepo;
     }
-
-
-    @RequestMapping("init-test-data")
-    public String initTestData() {
-        return service.initTestData();
-    }
-
 
     @RequestMapping("findall")
     public String findAll() {
         final StringBuilder sb = new StringBuilder();
-        service.findAll().forEach(p -> {
+        personRepo.findAll().forEach(p -> {
             sb.append(p.toString()).append("<br/>");
         });
         return sb.toString();
@@ -38,12 +31,12 @@ public class PersonController {
 
     @RequestMapping("findbyid")
     public String findById(@RequestParam("id") long id) {
-        return service.findById(id).toString();
+        return personRepo.findById(id).toString();
     }
 
     @RequestMapping("findbylastname")
     public String findByLastName(@RequestParam("lastname") String lastName) {
-        return service.findByLastName(lastName)
+        return personRepo.findByLastName(lastName)
                 .stream()
                 .map(c -> c.toString())
                 .collect(Collectors.joining("<br/>"));
