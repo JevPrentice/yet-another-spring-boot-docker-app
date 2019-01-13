@@ -12,6 +12,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.1.RELEASE</version>
+        <!--<version>1.5.8.RELEASE</version>-->
         <relativePath/>
     </parent>
 
@@ -25,6 +26,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.findbugs.version>3.0.3</maven.findbugs.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--Override thymeleaf versions-->
+        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
     </properties>
 
     <dependencies>
@@ -64,10 +70,29 @@
             <artifactId>annotations</artifactId>
             <version>${google.findbugs.annotations.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>${thymeleaf-layout-dialect.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>${thymeleaf-extras-springsecurity5.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
@@ -83,26 +108,16 @@
             <artifactId>bootstrap</artifactId>
             <version>4.2.1</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.webjars</groupId>-->
-        <!--<artifactId>font-awesome</artifactId>-->
-        <!--<version>5.6.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.webjars</groupId>-->
-        <!--<artifactId>webjars-locator</artifactId>-->
-        <!--<version>0.34</version>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>
         <finalName>${final.name}</finalName>
         <plugins>
             <!-- Package as a thin jar to speed up docker image build time -->
-            <!--<plugin>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
             <!--Compile with 1.8 and xlint -->
             <plugin>

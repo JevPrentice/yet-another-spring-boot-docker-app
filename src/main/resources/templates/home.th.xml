@@ -1,6 +1,0 @@
-<thlogic>
-    <attr sel="#headId" th:replace="~{fragments/head :: headFragment}"/>
-    <attr sel="#welcome" th:text="#{home.welcome.message}"/>
-    <attr sel="#dynamicContent" th:text="${__${T(com.jevprentice.util.AttributeNames).MAIN_MESSAGE}__}"/>
-    <attr sel="#footerId" th:replace="~{fragments/footer :: footer}"/>
-</thlogic>

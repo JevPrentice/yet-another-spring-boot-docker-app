@@ -1,5 +1,0 @@
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="com.jevprentice" level="DEBUG"/>
-    <logger name="org.springframework" level="INFO"/>
-</configuration>

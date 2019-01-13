@@ -21,13 +21,13 @@ public class PersonController {
     }
 
 
-    @RequestMapping("person/init-test-data")
+    @RequestMapping("init-test-data")
     public String initTestData() {
         return service.initTestData();
     }
 
 
-    @RequestMapping("person/findall")
+    @RequestMapping("findall")
     public String findAll() {
         final StringBuilder sb = new StringBuilder();
         service.findAll().forEach(p -> {
@@ -36,12 +36,12 @@ public class PersonController {
         return sb.toString();
     }
 
-    @RequestMapping("person/findbyid")
+    @RequestMapping("findbyid")
     public String findById(@RequestParam("id") long id) {
         return service.findById(id).toString();
     }
 
-    @RequestMapping("person/findbylastname")
+    @RequestMapping("findbylastname")
     public String findByLastName(@RequestParam("lastname") String lastName) {
         return service.findByLastName(lastName)
                 .stream()

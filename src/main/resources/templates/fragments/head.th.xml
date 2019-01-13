@@ -1,4 +1,0 @@
-<thlogic>
-    <attr sel="#headId" th:fragment="headFragment"/>
-    <attr sel="#title" th:text="#{fragments.head.title}"/>
-</thlogic>
