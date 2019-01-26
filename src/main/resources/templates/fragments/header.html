@@ -16,7 +16,12 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Profile</a>
+                        <span sec:authorize="!isAuthenticated()">
+                            <a class="nav-link disabled" href="#">Profile</a>
+                        </span>
+                        <span sec:authorize="isAuthenticated()">
+                            <a class="nav-link" href="#" th:href="@{/profile}">Profile</a>
+                        </span>
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">

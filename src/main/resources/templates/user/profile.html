@@ -3,11 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Access Denied</title>
+    <title>Profile</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1 class="mt-5">Access denied!</h1>
+    <h3 class="mt-5">This is a your profile!</h3>
+    <!--TODO ... -->
     <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </div>
 </body>

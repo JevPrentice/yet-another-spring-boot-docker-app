@@ -1,7 +1,7 @@
 package com.jevprentice.security;
 
-import com.jevprentice.model.AppUserRoles;
 import com.jevprentice.service.UserDetailsServiceImpl;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfig(
-            final LoggingAccessDeniedHandler loggingAccessDeniedHandler,
-            final UserDetailsServiceImpl userDetailsServiceImpl
+            @NonNull final LoggingAccessDeniedHandler loggingAccessDeniedHandler,
+            @NonNull final UserDetailsServiceImpl userDetailsServiceImpl
     ) {
         this.loggingAccessDeniedHandler = loggingAccessDeniedHandler;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/register/**"
                 ).permitAll()
-                .antMatchers("/user/**").hasRole(AppUserRoles.USER.getName()).anyRequest().authenticated()
+                .antMatchers("/user/**").hasRole("USER").anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

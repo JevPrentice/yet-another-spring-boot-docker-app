@@ -1,33 +1,27 @@
 package com.jevprentice.service;
 
-import com.jevprentice.model.AppUser;
-import com.jevprentice.model.AppUserRoles;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final AppUserService webUserService;
+    private final UserService service;
 
-    public UserDetailsServiceImpl(@NonNull final AppUserService webUserService) {
-        this.webUserService = webUserService;
+    public UserDetailsServiceImpl(@NonNull final UserService service) {
+        this.service = service;
     }
 
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final AppUser webUser = webUserService.findAppUser(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
-        return new User(webUser.getUsername(), webUser.getPassword(),
-                Arrays.asList(new SimpleGrantedAuthority(AppUserRoles.USER.getName())));
+    public UserDetails loadUserByUsername(@NonNull final String username) throws UsernameNotFoundException {
+        final com.jevprentice.model.User user = service.findUser(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 }
