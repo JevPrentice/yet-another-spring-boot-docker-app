@@ -8,9 +8,17 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <h1 class="mt-5">Terrier service</h1>
-    <p>To see more things, <a href="/login" th:href="@{/login}">sign in</a> or
-        <a href="/register" th:href="@{/register}">sign up</a>!
-    </p>
+
+    <span sec:authorize="!isAuthenticated()">
+        <p>To see more things you can <a href="/login" th:href="@{/login}">sign in</a> or
+            <a href="/register" th:href="@{/register}">sign up</a>!</p>
+    </span>
+
+    <span sec:authorize="isAuthenticated()">
+        Welcome to the terrier service, only signed in users can see this special text.
+    </span>
+    <!--TODO create a secured page behind spring security-->
+    <!--TODO setup a working access denied error page -->
 </div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.jevprentice.security;
 
+import com.jevprentice.model.AppUserRoles;
+import com.jevprentice.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,15 +16,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LoggingAccessDeniedHandler loggingAccessDeniedHandler;
-//    private final WebUserRepo webUserRepo;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
     public SecurityConfig(
-            final LoggingAccessDeniedHandler loggingAccessDeniedHandler
-//            final WebUserRepo webUserRepo
+            final LoggingAccessDeniedHandler loggingAccessDeniedHandler,
+            final UserDetailsServiceImpl userDetailsServiceImpl
     ) {
         this.loggingAccessDeniedHandler = loggingAccessDeniedHandler;
-//        this.webUserRepo = webUserRepo;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
     @Bean
@@ -38,10 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/css/**",
                         "/img/**",
-                        "/webjars/**"
+                        "/webjars/**",
+                        "/register/**"
                 ).permitAll()
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
+                .antMatchers("/user/**").hasRole(AppUserRoles.USER.getName()).anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -60,10 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        final WebUser admin = webUserRepo.findByUserName("admin").orElseThrow(RuntimeException::new);
-        auth.inMemoryAuthentication()
-                .withUser("user") // TODO
-                .password(passwordEncoder().encode("user"))
-                .roles("USER");
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
     }
 }
