@@ -117,7 +117,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
             <!--Compile with 1.8 and xlint -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -129,7 +128,6 @@
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
-
             <!--Search for code problems with findbugs-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -152,7 +150,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <!--Build docker image-->
             <plugin>
                 <groupId>com.spotify</groupId>

@@ -11,14 +11,11 @@
 
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Spring Security Thymeleaf</title>
 </head>
-<!--TODO-->
 <body class="pt-5">
 <th:block th:replace="fragments/header :: header"/>
-<!--<div class="container">-->
 <main role="main" class="container">
     <th:block layout:fragment="content"/>
 </main>
-<!--</div>-->
 <th:block th:replace="fragments/footer :: footer"/>
 </body>
 </html>

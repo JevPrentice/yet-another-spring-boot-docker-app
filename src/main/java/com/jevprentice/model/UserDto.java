@@ -3,7 +3,7 @@ package com.jevprentice.model;
 import lombok.Data;
 
 @Data
-public class RegisterDto {
+public class UserDto {
     private String username;
     private String password;
 }

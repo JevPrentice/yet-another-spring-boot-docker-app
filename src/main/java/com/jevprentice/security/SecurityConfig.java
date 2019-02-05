@@ -1,6 +1,6 @@
 package com.jevprentice.security;
 
-import com.jevprentice.service.UserDetailsServiceImpl;
+import com.jevprentice.service.UserService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,15 +16,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LoggingAccessDeniedHandler loggingAccessDeniedHandler;
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final UserService userService;
 
     @Autowired
     public SecurityConfig(
             @NonNull final LoggingAccessDeniedHandler loggingAccessDeniedHandler,
-            @NonNull final UserDetailsServiceImpl userDetailsServiceImpl
+            @NonNull final UserService userService
     ) {
         this.loggingAccessDeniedHandler = loggingAccessDeniedHandler;
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.userService = userService;
     }
 
     @Bean
@@ -62,6 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 }
