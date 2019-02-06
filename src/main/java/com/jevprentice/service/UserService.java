@@ -1,7 +1,6 @@
 package com.jevprentice.service;
 
 import com.jevprentice.model.User;
-import com.jevprentice.model.UserDto;
 import com.jevprentice.repository.UserRepo;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +40,6 @@ public class UserService implements UserDetailsManager, UserDetailsService {
         log.info("UserDetailsManagerImpl.updateUser");
         final User user = userRepo.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException(userDetails.getUsername()));
-        final UserDto dto = new UserDto();
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
         userRepo.save(new User(user.getUsername(), user.getPassword(), user.getAuthorities().toArray(new GrantedAuthority[0])));
     }
 

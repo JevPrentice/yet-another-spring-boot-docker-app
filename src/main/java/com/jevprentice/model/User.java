@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString(exclude = "authorities")
 public class User implements Serializable, UserDetails {
@@ -37,6 +36,16 @@ public class User implements Serializable, UserDetails {
 
     @Column(nullable = false)
     private @NonNull GrantedAuthority[] authorities;
+
+    public User(
+            @Size(min = 1) @NonNull final String username,
+            @Size(min = 1) @NonNull final String password,
+            @NonNull final GrantedAuthority[] authorities
+    ) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities.clone();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -61,5 +70,9 @@ public class User implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.unmodifiableList(Arrays.asList(authorities));
+    }
+
+    public void setAuthorities(@NonNull final GrantedAuthority[] authorities) {
+        this.authorities = authorities.clone();
     }
 }
