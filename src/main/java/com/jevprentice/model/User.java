@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Entity
+@Table(name="\"user\"")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")

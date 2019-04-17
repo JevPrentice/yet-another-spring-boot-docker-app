@@ -2,6 +2,12 @@
 
 This project is yet another simple service written with Java and Spring boot, the project is built into a openjdk:12 docker image using Maven.
 
+Features:
+Basic website w templating
+JPA enabled user
+Spring boot security enabled with user
+Update password
+
 ## Build project and local image with maven, then push to dockerhub ( Mush be signed in )
 
 mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest
@@ -13,8 +19,6 @@ docker swarm init
 mkdir -p /tmp/yet-another-spring-boot-docker-app/data/pgdata
 
 docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
-
-mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
 
 ## Docker and docker stack helpful commands
 
@@ -29,6 +33,9 @@ docker service logs yet-another-spring-boot-docker-app_db
 docker stack rm yet-another-spring-boot-docker-app
 
 docker service update --image jevprentice/yet-another-spring-boot-docker-app:latest --force yet-another-spring-boot-docker-app_web
+
+mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
+mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker service update --image jevprentice/yet-another-spring-boot-docker-app:latest --force yet-another-spring-boot-docker-app_web
 
 ## Build and push docker image (Without Maven)
 
