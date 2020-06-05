@@ -37,6 +37,7 @@ public class PersistedResourceService {
     }
 
     public Optional<PersistedResource> getUserProfilePicture(@NonNull final User user) {
-        return userProfilePictureRepo.findByUser(user).map(UserProfilePicture::getPersistedResource);
+        return Optional.empty();
+        //return userProfilePictureRepo.findByUser(user).map(UserProfilePicture::getPersistedResource);
     }
 }

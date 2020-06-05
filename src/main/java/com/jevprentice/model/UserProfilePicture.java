@@ -24,11 +24,11 @@ public class UserProfilePicture implements Serializable {
     @OneToOne
     private User user;
 
-    @OneToOne
-    private PersistedResource persistedResource;
+//    @OneToOne
+//    private PersistedResource persistedResource;
 
     public UserProfilePicture(@NonNull final User user, @NonNull final PersistedResource persistedResource) {
         this.user = user;
-        this.persistedResource = persistedResource;
+//        this.persistedResource = persistedResource;
     }
 }
