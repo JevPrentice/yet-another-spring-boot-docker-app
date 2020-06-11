@@ -1,52 +1,16 @@
 # Yet another Spring Boot Docker Application
 
-This project is yet another simple service written with Java and Spring boot, the project is built into a openjdk:12 docker image using Maven.
+This project is yet another simple service written with Java and Spring boot.
 
-Features:
-Basic website w templating
-JPA enabled user
-Spring boot security enabled with user
-Update password
+Add the following to /etc/hosts to run application without docker.
+127.0.0.1 localhost host.docker.internal
 
-## Build project and local image with maven, then push to dockerhub ( Mush be signed in )
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=jevprentice/yet-another-spring-boot-docker-app
+docker run -p 8088:8088 -t jevprentice/yet-another-spring-boot-docker-app
 
-mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest
-
-## Docker swarm (An image mush be available on dockerhub - https://cloud.docker.com/repository/registry-1.docker.io/jevprentice/yet-another-spring-boot-docker-app/tags)
-
-docker swarm init
-
-mkdir -p /tmp/yet-another-spring-boot-docker-app/data/pgdata
-
-docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
-
-## Docker and docker stack helpful commands
-
-docker stack services yet-another-spring-boot-docker-app
-
-docker stack ps yet-another-spring-boot-docker-app
-
-docker service logs yet-another-spring-boot-docker-app_web
-
-docker service logs yet-another-spring-boot-docker-app_db
-
-docker stack rm yet-another-spring-boot-docker-app
-
-docker service update --image jevprentice/yet-another-spring-boot-docker-app:latest --force yet-another-spring-boot-docker-app_web
-
-mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker stack deploy -c docker-compose.yml yet-another-spring-boot-docker-app --with-registry-auth
-mvn clean install && docker push jevprentice/yet-another-spring-boot-docker-app:latest && docker service update --image jevprentice/yet-another-spring-boot-docker-app:latest --force yet-another-spring-boot-docker-app_web
-
-## Build and push docker image (Without Maven)
-
-### Build image
-
-docker build -t jevprentice/yet-another-spring-boot-docker-app:latest .
-
-### Push image ( Must be signed in )
-
-docker push jevprentice/yet-another-spring-boot-docker-app:latest
-
-## Access Postgres
-
-export PGPASSWORD="postgres_password" && "/Applications/Postgres.app/Contents/Versions/11/bin/psql" -p5432 -d "yet-another-spring-boot-docker-app" -U "postgres_username" -h localhost
+### Register a new user
+    curl -H "Content-Type: application/json" -X POST http://localhost:8088/api/users/register -d '{"username": "admin", "password": "password"}' | jq
+### Login as an existing user
+    curl -H "Content-Type: application/json" -X POST http://localhost:8088/api/users/login -d '{"username": "admin", "password": "password"}' | jq '.authHeader'
+### Get a human being
+    curl -H "Content-Type: application/json" -X GET http://localhost:8088/api/human/2 -H  | jq

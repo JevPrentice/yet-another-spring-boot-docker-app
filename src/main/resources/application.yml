@@ -2,24 +2,18 @@ server:
   port: 8088
 
 spring:
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    content-type: text/html
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
-    # excluded-view-names:
-    # template-resolver-order:
-    # view-names:
+  logging:
+    level:
+      root: WARN
+      com.jevprentice: DEBUG
+      org.springframework.web: INFO
+      org.springframework.security: INFO
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/yet-another-spring-boot-docker-app
+    platform: postgres
+    url: jdbc:postgresql://host.docker.internal:5432/yet_another_spring_boot_docker_app
     username: postgres_username
     password: postgres_password
+    driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -27,16 +21,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: yet_another_schema
+        default_schema: public
         hbm2ddl:
           auto: create-drop
-        temp:
-          use_jdbc_metadata_defaults: false
-  logging:
-    level:
-      root: WARN
-      com.jevprentice: DEBUG
-      org.springframework.web: INFO
-      org.springframework.security: INFO
   mvc:
 

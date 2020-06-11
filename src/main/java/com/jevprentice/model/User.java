@@ -1,31 +1,34 @@
 package com.jevprentice.model;
 
+import io.jsonwebtoken.lang.Collections;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
 
-@Entity
-@Table(name="\"user\"")
-@Data
-@NoArgsConstructor
+/**
+ * Entity for an authenticated User, implements Spring's {@link UserDetails}
+ * This class is not immutable because it is a JPA entity with a default constructor and getters / setters.
+ */
+// lombok
+@AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 @ToString(exclude = "authorities")
-public class User implements Serializable, UserDetails {
+// jpa
+@Entity
+@Table(name = "\"user\"")
+public class User implements UserDetails {
 
     private static final long serialVersionUID = SerializableVersion.VERSION;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true, nullable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Size(min = 1)
     @Column(unique = true, nullable = false)
@@ -38,14 +41,7 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = false)
     private @NonNull GrantedAuthority[] authorities;
 
-    public User(
-            @Size(min = 1) @NonNull final String username,
-            @Size(min = 1) @NonNull final String password,
-            @NonNull final GrantedAuthority[] authorities
-    ) {
-        this.username = username;
-        this.password = password;
-        this.authorities = authorities.clone();
+    public User() {
     }
 
     @Override
@@ -70,10 +66,6 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.unmodifiableList(Arrays.asList(authorities));
-    }
-
-    public void setAuthorities(@NonNull final GrantedAuthority[] authorities) {
-        this.authorities = authorities.clone();
+        return Collections.arrayToList(authorities);
     }
 }
