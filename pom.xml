@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <java.version>14</java.version>
-        <org.springframework.security.core.version>5.3.3.RELEASE</org.springframework.security.core.version>
+        <org.springframework.security.core.version>5.3.10.RELEASE</org.springframework.security.core.version>
         <io.jsonwebtoken.jjwt.version>0.9.1</io.jsonwebtoken.jjwt.version>
         <build.final.name>yet-another-spring-boot-docker-app</build.final.name>
     </properties>
